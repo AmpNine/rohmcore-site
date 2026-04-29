@@ -1,66 +1,68 @@
-// This ensures the 3D model is fully ready before we try to touch it
 const modelViewer = document.querySelector("#product-viewer");
 
-// --- 1. ACCORDION LOGIC ---
-// We attach it to 'window' so the HTML onclick can find it
+// Exact names from your Rhino Layer screenshot
+const allDesignLayers = [
+    'Blank_Bar', 
+    'Koi', 
+    'LighthouseSun', 
+    'Wave', 
+    'BonsaiSun', 
+    'Ginkgo', 
+    'MonsteraSun'
+];
+
+// 1. Accordion Toggle
 window.toggleMenu = (button) => {
     const item = button.parentElement;
     const panel = item.querySelector('.accordion-panel');
     const isCurrentlyActive = item.classList.contains('active');
 
-    // Close all other panels first (Optional: keeps it tidy)
-    document.querySelectorAll('.accordion-item').forEach(el => {
-        el.classList.remove('active');
-        const p = el.querySelector('.accordion-panel');
-        if (p) p.style.display = 'none';
-    });
-
-    // Toggle the clicked one
-    if (!isCurrentlyActive) {
+    if (isCurrentlyActive) {
+        item.classList.remove('active');
+        panel.style.display = 'none';
+    } else {
         item.classList.add('active');
         panel.style.display = 'block';
     }
 };
 
-// --- 2. DESIGN SWITCHING (RHINO LAYERS) ---
-window.selectDesign = (button, targetLayerName) => {
-    // A. Open the menu visually
-    window.toggleMenu(button);
-
-    // B. Logic for the 3D model
+// 2. Design Visibility Logic
+window.selectDesign = (targetLayerName) => {
     if (!modelViewer.model) return;
 
-    // We look through all "nodes" (the parts of your GLB/Rhino layers)
-    modelViewer.model.nodes.forEach((node) => {
-        // If the node name contains "Design_", we decide whether to show or hide it
-        if (node.name.includes("Design")) {
-            if (node.name.includes(targetLayerName)) {
-                node.show(); // Show the one we clicked
+    allDesignLayers.forEach((layerName) => {
+        // Find every part (node) associated with this layer
+        const nodes = modelViewer.model.nodes.filter(n => n.name.includes(layerName));
+        
+        nodes.forEach(node => {
+            if (layerName === targetLayerName) {
+                node.show();
             } else {
-                node.hide(); // Hide the others
+                node.hide();
             }
-        }
+        });
     });
 };
 
-// --- 3. COLOR CHANGING ---
-window.changeColor = (materialNames, hex) => {
+// 3. Color Logic
+window.changeColor = (materialName, hex) => {
     if (!modelViewer.model) return;
     
-    const rgb = hexToRgb(hex);
-    
-    materialNames.forEach(name => {
-        const material = modelViewer.model.materials.find(m => m.name === name);
-        if (material) {
-            material.pbrMetallicRoughness.setBaseColorFactor([rgb.r/255, rgb.g/255, rgb.b/255, 1]);
-        }
-    });
+    const material = modelViewer.model.materials.find(m => m.name === materialName);
+    if (material) {
+        const rgb = hexToRgb(hex);
+        material.pbrMetallicRoughness.setBaseColorFactor([rgb.r/255, rgb.g/255, rgb.b/255, 1]);
+    }
 };
 
-// Helper: Hex to RGB
 function hexToRgb(hex) {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
     return {r, g, b};
 }
+
+// Optional: Set default design once model loads
+modelViewer.addEventListener('load', () => {
+    window.selectDesign('Blank_Bar');
+});

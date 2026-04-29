@@ -1,214 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SinTins | RohmCore</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-</head>
-<body>
-
-    <header>
-        <div class="logo">
-            <a href="index.html"><img src="assets/images/A9_NewLogo_Round_YT.png" alt="RohmCore Logo"></a>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="sintins.html">Products</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#" class="cart-icon"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="configurator-layout">
+<aside class="config-sidebar">
+    <div class="breadcrumbs">Home / Gear / SinTins</div>
+    <h1 class="config-title">Modular SinTin</h1>
+    
+    <div class="accordion-container">
         
-        <aside class="config-sidebar">
-            <div class="breadcrumbs">Home / Gear / SinTins</div>
-            <h1 class="config-title">Modular SinTin</h1>
-            
-            <div class="accordion-container">
+        <div class="accordion-item active">
+            <button class="accordion-header" onclick="toggleMenu(this)">
+                <span>1. Case Components</span>
+                <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            </button>
+            <div class="accordion-panel" style="display: block;">
+                <div class="option-group">
+                    <span class="option-label">Top Color</span>
+                    <div class="swatch-row">
+                        <button class="swatch" style="background:#F5F1E7" onclick="changeColor('Mat_Top', '#F5F1E7')"></button>
+                        <button class="swatch" style="background:#333333" onclick="changeColor('Mat_Top', '#333333')"></button>
+                        <button class="swatch" style="background:#5A6B5D" onclick="changeColor('Mat_Top', '#5A6B5D')"></button>
+                    </div>
+                </div>
+                <div class="option-group">
+                    <span class="option-label">Base Color</span>
+                    <div class="swatch-row">
+                        <button class="swatch" style="background:#F5F1E7" onclick="changeColor('Mat_Base', '#F5F1E7')"></button>
+                        <button class="swatch" style="background:#333333" onclick="changeColor('Mat_Base', '#333333')"></button>
+                        <button class="swatch" style="background:#5A6B5D" onclick="changeColor('Mat_Base', '#5A6B5D')"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item active">
+            <button class="accordion-header" onclick="toggleMenu(this)">
+                <span>2. Choose Your Design</span>
+                <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+            </button>
+            <div class="accordion-panel" style="display: block;">
                 
-                <div class="accordion-item active">
-                    <button class="accordion-header" onclick="toggleMenu(this)">
-                        <span>Case Components</span>
-                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-                    </button>
-                    <div class="accordion-panel" style="display: block;">
-                        <div class="option-group">
-                            <span class="option-label">Base Color</span>
-                            <div class="swatch-row">
-                                <button class="swatch" style="background:#F5F1E7" onclick="changeColor(['Mat_Base'], '#F5F1E7')"></button>
-                                <button class="swatch" style="background:#333333" onclick="changeColor(['Mat_Base'], '#333333')"></button>
-                                <button class="swatch" style="background:#5A6B5D" onclick="changeColor(['Mat_Base'], '#5A6B5D')"></button>
-                            </div>
-                        </div>
-                        <div class="option-group">
-                            <span class="option-label">Top Color</span>
-                            <div class="swatch-row">
-                                <button class="swatch" style="background:#F5F1E7" onclick="changeColor(['Mat_Top'], '#F5F1E7')"></button>
-                                <button class="swatch" style="background:#333333" onclick="changeColor(['Mat_Top'], '#333333')"></button>
-                                <button class="swatch" style="background:#5A6B5D" onclick="changeColor(['Mat_Top'], '#5A6B5D')"></button>
-                            </div>
-                        </div>
+                <div class="option-group">
+                    <span class="option-label">Select Artwork</span>
+                    <select id="design-selector" class="design-dropdown" onchange="selectDesign(this.value)">
+                        <option value="Blank_Bar">Blank Bar</option>
+                        <option value="Koi">Koi</option>
+                        <option value="LighthouseSun">Lighthouse Sun</option>
+                        <option value="Wave">The Wave</option>
+                        <option value="BonsaiSun">Bonsai Sun</option>
+                        <option value="Ginkgo">Ginkgo Leaf</option>
+                        <option value="MonsteraSun">Monstera Sun</option>
+                    </select>
+                </div>
+
+                <hr class="divider">
+
+                <div class="option-group">
+                    <span class="option-label">Design: Main Color</span>
+                    <div class="swatch-row">
+                        <button class="swatch" style="background:#C0392B" onclick="changeColor('Mat_DesignMain', '#C0392B')"></button>
+                        <button class="swatch" style="background:#2980B9" onclick="changeColor('Mat_DesignMain', '#2980B9')"></button>
+                        <button class="swatch" style="background:#F39C12" onclick="changeColor('Mat_DesignMain', '#F39C12')"></button>
                     </div>
                 </div>
 
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="selectDesign(this, 'BlankBar')">
-                        <span>Design: Blank Bar</span>
-                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-                    </button>
-                    <div class="accordion-panel">
-                        <p>No engraving. Minimalist finish.</p>
+                <div class="option-group">
+                    <span class="option-label">Design: Accent Color</span>
+                    <div class="swatch-row">
+                        <button class="swatch" style="background:#FFFFFF" onclick="changeColor('Mat_DesignSub', '#FFFFFF')"></button>
+                        <button class="swatch" style="background:#333333" onclick="changeColor('Mat_DesignSub', '#333333')"></button>
                     </div>
                 </div>
 
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="selectDesign(this, 'Koi')">
-                        <span>Design: Koi</span>
-                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-                    </button>
-                    <div class="accordion-panel">
-                        <div class="option-group">
-                            <span class="option-label">Accent Color</span>
-                            <div class="swatch-row">
-                                <button class="swatch" style="background:#C0392B" onclick="changeColor(['Mat_DesignMain'], '#C0392B')"></button>
-                                <button class="swatch" style="background:#2980B9" onclick="changeColor(['Mat_DesignMain'], '#2980B9')"></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="selectDesign(this, 'LighthouseSun')">
-                        <span>Design: Lighthouse Sun</span>
-                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-                    </button>
-                    <div class="accordion-panel">
-                        <p>Coastal inspired design.</p>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="selectDesign(this, 'Wave')">
-                        <span>Design: The Wave</span>
-                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-                    </button>
-                    <div class="accordion-panel">
-                         <p>Classic ocean motif.</p>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="selectDesign(this, 'BonsaiSun')">
-                        <span>Design: Bonsai Sun</span>
-                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-                    </button>
-                    <div class="accordion-panel">
-                         <p>Zen aesthetic.</p>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="selectDesign(this, 'Ginkgo')">
-                        <span>Design: Ginkgo Leaf</span>
-                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-                    </button>
-                    <div class="accordion-panel">
-                        <p>Nature inspired patterns.</p>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="selectDesign(this, 'MonsteraSun')">
-                        <span>Design: Monstera Sun</span>
-                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-                    </button>
-                    <div class="accordion-panel">
-                        <p>Tropical leaf pattern.</p>
-                    </div>
-                </div>
-
-            </div>
-        </aside>
-
-        <section class="config-viewer-area">
-            <model-viewer id="product-viewer" 
-                src="assets/models/site-assets-1.glb" 
-                camera-controls 
-                shadow-intensity="1" 
-                environment-image="neutral" 
-                exposure="1" 
-                interaction-prompt="none" 
-                ar>
-            </model-viewer>
-            
-            <div class="floating-checkout">
-                <div class="price-stack">
-                    <span class="price-label">Total</span>
-                    <span class="price-value">$40.00</span>
-                </div>
-                <button class="btn-checkout">Done</button>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <div class="footer-links">
-            <div>
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="sintins.html">Shop</a></li>
-                    <li><a href="mailto:joe@rohmcore.com">Contact</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Socials</h4>
-                <ul>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">YouTube</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Info</h4>
-                <ul>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="mailto:joseph@ampnine.com">Support</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>About</h4>
-                <ul>
-                    <li><a href="#">Our Story</a></li>
-                </ul>
             </div>
         </div>
-        <div class="footer-logo">
-            <img src="assets/images/A9_NewLogo_Round_YT.png" alt="RohmCore">
-        </div>
-    </footer>
 
-    <script type="module" src="js/configurator.js"></script>
-
-    <div id="cookie-banner">
-        <p>We use functional cookies (via Shopify) to ensure your shopping cart works perfectly. By using our site, you agree to our <a href="privacy.html" style="text-decoration:underline">Privacy Policy</a>.</p>
-        <button onclick="acceptCookies()">Got it</button>
     </div>
-
-    <script>
-        function acceptCookies() {
-            localStorage.setItem('cookiesAccepted', 'true');
-            document.getElementById('cookie-banner').style.display = 'none';
-        }
-        if (!localStorage.getItem('cookiesAccepted')) {
-            document.getElementById('cookie-banner').style.display = 'flex';
-        }
-    </script>
-
-</body>
-</html>
+</aside>
