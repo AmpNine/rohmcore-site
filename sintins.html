@@ -1,75 +1,114 @@
-<aside class="config-sidebar">
-    <div class="breadcrumbs">Home / Gear / SinTins</div>
-    <h1 class="config-title">Modular SinTin</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SinTins | RohmCore</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
     
-    <div class="accordion-container">
+    <style>
+        /* Emergency Layout Fixes */
+        .configurator-layout { display: flex; min-height: 80vh; }
+        .config-sidebar { width: 350px; padding: 20px; border-right: 1px solid #eee; }
+        .config-viewer-area { flex-grow: 1; position: relative; background: #f9f9f9; }
+        model-viewer { width: 100%; height: 100%; min-height: 500px; }
         
-        <div class="accordion-item active">
-            <button class="accordion-header" onclick="toggleMenu(this)">
-                <span>1. Case Components</span>
-                <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-            </button>
-            <div class="accordion-panel" style="display: block;">
-                <div class="option-group">
-                    <span class="option-label">Top Color</span>
-                    <div class="swatch-row">
-                        <button class="swatch" style="background:#F5F1E7" onclick="changeColor('Mat_Top', '#F5F1E7')"></button>
-                        <button class="swatch" style="background:#333333" onclick="changeColor('Mat_Top', '#333333')"></button>
-                        <button class="swatch" style="background:#5A6B5D" onclick="changeColor('Mat_Top', '#5A6B5D')"></button>
-                    </div>
-                </div>
-                <div class="option-group">
-                    <span class="option-label">Base Color</span>
-                    <div class="swatch-row">
-                        <button class="swatch" style="background:#F5F1E7" onclick="changeColor('Mat_Base', '#F5F1E7')"></button>
-                        <button class="swatch" style="background:#333333" onclick="changeColor('Mat_Base', '#333333')"></button>
-                        <button class="swatch" style="background:#5A6B5D" onclick="changeColor('Mat_Base', '#5A6B5D')"></button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        .swatch { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #ccc; cursor: pointer; margin-right: 8px; }
+        .swatch-row { display: flex; padding: 10px 0; }
+        .design-dropdown { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+        .divider { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+        .accordion-panel { display: none; padding: 10px 0; }
+        .accordion-item.active .accordion-panel { display: block; }
+    </style>
+</head>
+<body>
 
-        <div class="accordion-item active">
-            <button class="accordion-header" onclick="toggleMenu(this)">
-                <span>2. Choose Your Design</span>
-                <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-            </button>
-            <div class="accordion-panel" style="display: block;">
+    <main class="configurator-layout">
+        <aside class="config-sidebar">
+            <div class="breadcrumbs">Home / Gear / SinTins</div>
+            <h1 class="config-title">Modular SinTin</h1>
+            
+            <div class="accordion-container">
                 
-                <div class="option-group">
-                    <span class="option-label">Select Artwork</span>
-                    <select id="design-selector" class="design-dropdown" onchange="selectDesign(this.value)">
-                        <option value="Blank_Bar">Blank Bar</option>
-                        <option value="Koi">Koi</option>
-                        <option value="LighthouseSun">Lighthouse Sun</option>
-                        <option value="Wave">The Wave</option>
-                        <option value="BonsaiSun">Bonsai Sun</option>
-                        <option value="Ginkgo">Ginkgo Leaf</option>
-                        <option value="MonsteraSun">Monstera Sun</option>
-                    </select>
-                </div>
-
-                <hr class="divider">
-
-                <div class="option-group">
-                    <span class="option-label">Design: Main Color</span>
-                    <div class="swatch-row">
-                        <button class="swatch" style="background:#C0392B" onclick="changeColor('Mat_DesignMain', '#C0392B')"></button>
-                        <button class="swatch" style="background:#2980B9" onclick="changeColor('Mat_DesignMain', '#2980B9')"></button>
-                        <button class="swatch" style="background:#F39C12" onclick="changeColor('Mat_DesignMain', '#F39C12')"></button>
+                <div class="accordion-item active">
+                    <button class="accordion-header" onclick="toggleMenu(this)">
+                        <span>1. Case Components</span>
+                        <svg class="chevron" viewBox="0 0 24 24" width="20"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </button>
+                    <div class="accordion-panel">
+                        <div class="option-group">
+                            <span class="option-label">Top Color</span>
+                            <div class="swatch-row">
+                                <button class="swatch" style="background:#F5F1E7" onclick="changeColor('Mat_Top', '#F5F1E7')"></button>
+                                <button class="swatch" style="background:#333333" onclick="changeColor('Mat_Top', '#333333')"></button>
+                                <button class="swatch" style="background:#5A6B5D" onclick="changeColor('Mat_Top', '#5A6B5D')"></button>
+                            </div>
+                        </div>
+                        <div class="option-group">
+                            <span class="option-label">Base Color</span>
+                            <div class="swatch-row">
+                                <button class="swatch" style="background:#F5F1E7" onclick="changeColor('Mat_Base', '#F5F1E7')"></button>
+                                <button class="swatch" style="background:#333333" onclick="changeColor('Mat_Base', '#333333')"></button>
+                                <button class="swatch" style="background:#5A6B5D" onclick="changeColor('Mat_Base', '#5A6B5D')"></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="option-group">
-                    <span class="option-label">Design: Accent Color</span>
-                    <div class="swatch-row">
-                        <button class="swatch" style="background:#FFFFFF" onclick="changeColor('Mat_DesignSub', '#FFFFFF')"></button>
-                        <button class="swatch" style="background:#333333" onclick="changeColor('Mat_DesignSub', '#333333')"></button>
+                <div class="accordion-item active">
+                    <button class="accordion-header" onclick="toggleMenu(this)">
+                        <span>2. Choose Your Design</span>
+                        <svg class="chevron" viewBox="0 0 24 24" width="20"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </button>
+                    <div class="accordion-panel">
+                        <select id="design-selector" class="design-dropdown" onchange="selectDesign(this.value)">
+                            <option value="Blank_Bar">Blank Bar</option>
+                            <option value="Koi">Koi</option>
+                            <option value="LighthouseSun">Lighthouse Sun</option>
+                            <option value="Wave">The Wave</option>
+                            <option value="BonsaiSun">Bonsai Sun</option>
+                            <option value="Ginkgo">Ginkgo Leaf</option>
+                            <option value="MonsteraSun">Monstera Sun</option>
+                        </select>
+
+                        <hr class="divider">
+
+                        <div class="option-group">
+                            <span class="option-label">Design: Main Color</span>
+                            <div class="swatch-row">
+                                <button class="swatch" style="background:#C0392B" onclick="changeColor('Mat_DesignMain', '#C0392B')"></button>
+                                <button class="swatch" style="background:#2980B9" onclick="changeColor('Mat_DesignMain', '#2980B9')"></button>
+                                <button class="swatch" style="background:#F39C12" onclick="changeColor('Mat_DesignMain', '#F39C12')"></button>
+                            </div>
+                        </div>
+
+                        <div class="option-group">
+                            <span class="option-label">Design: Accent Color</span>
+                            <div class="swatch-row">
+                                <button class="swatch" style="background:#FFFFFF" onclick="changeColor('Mat_DesignSub', '#FFFFFF')"></button>
+                                <button class="swatch" style="background:#333333" onclick="changeColor('Mat_DesignSub', '#333333')"></button>
+                                <button class="swatch" style="background:#5A6B5D" onclick="changeColor('Mat_DesignSub', '#5A6B5D')"></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </aside>
 
-    </div>
-</aside>
+        <section class="config-viewer-area">
+            <model-viewer id="product-viewer" 
+                src="assets/models/site-assets-1.glb" 
+                camera-controls 
+                shadow-intensity="1" 
+                environment-image="neutral" 
+                exposure="1" 
+                ar>
+            </model-viewer>
+        </section>
+    </main>
+
+    <script type="module" src="js/configurator.js"></script>
+</body>
+</html>
