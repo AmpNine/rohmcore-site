@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SinTins | RohmCore</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="assets/images/A9_NewLogo_Round_YT.png" alt="RohmCore Logo"></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sintins.html">Products</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#" class="cart-icon"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="product-container">
+        
+        <div class="product-gallery">
+            <div class="breadcrumbs">Home / Gear / SinTins</div>
+            <model-viewer id="product-viewer" 
+                src="https://raw.githack.com/AmpNine/rohmcore-st/main/site-assets-240.glb" 
+                camera-controls shadow-intensity="1" environment-image="neutral" exposure="1" interaction-prompt="none" ar>
+            </model-viewer>
+        </div>
+
+        <div class="product-details">
+            <div class="product-brand">RohmCore LLC</div>
+            <h1 class="product-title">Modular SinTin</h1>
+            <div class="product-price">$ 40 .00</div>
+
+            <div class="controls">
+                <span class="option-label">Design Collection</span>
+                <div class="button-group">
+                    <button class="variant-btn active" onclick="switchDesignPack('site-assets-240.glb', this)">Core Container</button>
+                    <button class="variant-btn" onclick="switchDesignPack('site-assets-241.glb', this)">Design Pack 01</button>
+                    <button class="variant-btn" onclick="switchDesignPack('site-assets-242.glb', this)">Design Pack 02</button>
+                </div>
+
+                <span class="option-label">Base & Top Color</span>
+                <div class="swatch-row">
+                    <button class="swatch" style="background:#FFFFFF" onclick="changeColor(['Mat_Base', 'Mat_Top'], '#FFFFFF')"></button>
+                    <button class="swatch" style="background:#333333" onclick="changeColor(['Mat_Base', 'Mat_Top'], '#333333')"></button>
+                    <button class="swatch" style="background:#2ecc71" onclick="changeColor(['Mat_Base', 'Mat_Top'], '#2ecc71')"></button>
+                </div>
+
+                <span class="option-label">Design Accent Color</span>
+                <div class="swatch-row">
+                    <button class="swatch" style="background:#f1c40f" onclick="changeColor(['Mat_DesignMain', 'Mat_DesignAccent'], '#f1c40f')"></button>
+                    <button class="swatch" style="background:#3498db" onclick="changeColor(['Mat_DesignMain', 'Mat_DesignAccent'], '#3498db')"></button>
+                    <button class="swatch" style="background:#e74c3c" onclick="changeColor(['Mat_DesignMain', 'Mat_DesignAccent'], '#e74c3c')"></button>
+                </div>
+            </div>
+
+            <p class="product-desc">
+                Discover the ultimate modular container. Crafted with precision 3D printing, the SinTin allows you to instantly swap designs and colors to match your everyday carry.
+            </p>
+
+            <ul class="product-specs">
+                <li>Material: PLA 3D Printed Plastic</li>
+                <li>Dimensions: 4.25" x 4.25" x 1.25"</li>
+                <li>Weight: ~5 oz (Packaged)</li>
+                <li>Interchangeable top and base system</li>
+            </ul>
+
+            <button class="add-to-cart">Add to Cart</button>
+            <button class="shopify-placeholder">Buy with Shop</button>
+
+        </div>
+    </main>
+
+    <section class="related-section">
+        <h2>You May Also Like</h2>
+        <div class="related-grid">
+            <div class="related-card">
+                <img src="assets/images/placeholder.jpg" alt="Related Product">
+                <div class="related-brand">RohmCore LLC</div>
+                <div class="related-title">SinTin - Geometric</div>
+                <div class="related-price">$ 40 .00</div>
+            </div>
+            <div class="related-card">
+                <img src="assets/images/placeholder.jpg" alt="Related Product">
+                <div class="related-brand">RohmCore LLC</div>
+                <div class="related-title">SinTin - Organic</div>
+                <div class="related-price">$ 40 .00</div>
+            </div>
+            <div class="related-card">
+                <img src="assets/images/placeholder.jpg" alt="Related Product">
+                <div class="related-brand">RohmCore LLC</div>
+                <div class="related-title">EDC Tray</div>
+                <div class="related-price">$ 25 .00</div>
+            </div>
+            <div class="related-card">
+                <img src="assets/images/placeholder.jpg" alt="Related Product">
+                <div class="related-brand">RohmCore LLC</div>
+                <div class="related-title">Custom Insert</div>
+                <div class="related-price">$ 15 .00</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+    <div class="footer-links">
+        <div>
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sintins.html">Shop</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="mailto:joe@rohmcore.com">Contact</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Socials</h4>
+            <ul>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">YouTube</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Info</h4>
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="mailto:joe@rohmcore.com">Support</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>About</h4>
+            <ul>
+                <li><a href="#">Our Story</a></li>
+                <li><a href="#">Materials</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-logo">
+        <img src="assets/images/A9_NewLogo_Round_YT.png" alt="RohmCore">
+    </div>
+</footer>
+
+    <script type="module" src="js/configurator.js"></script>
+
+<div id="cookie-banner">
+    <p>We use functional cookies (via Shopify) to ensure your shopping cart works perfectly. By using our site, you agree to our <a href="privacy.html" style="text-decoration:underline">Privacy Policy</a>.</p>
+    <button onclick="acceptCookies()">Got it</button>
+</div>
+
+<script>
+    function acceptCookies() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        document.getElementById('cookie-banner').style.display = 'none';
+    }
+    if (!localStorage.getItem('cookiesAccepted')) {
+        document.getElementById('cookie-banner').style.display = 'flex';
+    }
+</script>
+
+</body>
+</html>

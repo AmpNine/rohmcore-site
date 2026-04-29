@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RohmCore | Custom Design & Fabrication</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/images/A9_NewLogo_Round_YT.png" alt="RohmCore Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="sintins.html">Products</a></li>
+                <li><a href="#">About</a></li>
+                <li>
+                    <a href="#" class="cart-icon">
+                        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="hero">
+        <h1>Coming Soon</h1>
+    </main>
+
+    <footer>
+    <div class="footer-links">
+        <div>
+            <h4>Info</h4>
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="mailto:joe@rohmcore.com">Support</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4>Socials</h4>
+            <ul>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">YouTube</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-logo">
+        <img src="assets/images/A9_NewLogo_Round_YT.png" alt="RohmCore">
+    </div>
+</footer>
+
+<div id="cookie-banner">
+    <p>We use functional cookies (via Shopify) to ensure your shopping cart works perfectly. By using our site, you agree to our <a href="privacy.html" style="text-decoration:underline">Privacy Policy</a>.</p>
+    <button onclick="acceptCookies()">Got it</button>
+</div>
+
+<script>
+    function acceptCookies() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        document.getElementById('cookie-banner').style.display = 'none';
+    }
+    if (!localStorage.getItem('cookiesAccepted')) {
+        document.getElementById('cookie-banner').style.display = 'flex';
+    }
+</script>
+
+</body>
+</html>
