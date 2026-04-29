@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const modelViewer = document.querySelector("#product-viewer");
-    const baseUrl = "https://raw.githack.com/AmpNine/rohmcore-site/main/assets/models/";
+    const baseUrl = "assets/models/";
   
     // 1. Accordion Toggle Logic
     window.toggleMenu = (button) => {
