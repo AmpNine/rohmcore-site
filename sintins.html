@@ -24,90 +24,104 @@
         </nav>
     </header>
 
-    <main class="product-container">
+    <main class="configurator-layout">
         
-        <div class="product-gallery">
+        <aside class="config-sidebar">
             <div class="breadcrumbs">Home / Gear / SinTins</div>
+            <h1 class="config-title">Modular SinTin</h1>
+            
+            <div class="accordion-container">
+                
+                <div class="accordion-item active">
+                    <button class="accordion-header" onclick="toggleMenu(this)">
+                        <span>Case Components</span>
+                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </button>
+                    <div class="accordion-panel" style="display: block;">
+                        
+                        <div class="option-group">
+                            <span class="option-label">Base Color</span>
+                            <div class="swatch-row">
+                                <button class="swatch" style="background:#F5F1E7" onclick="changeColor(['Mat_Base'], '#F5F1E7')"></button>
+                                <button class="swatch" style="background:#333333" onclick="changeColor(['Mat_Base'], '#333333')"></button>
+                                <button class="swatch" style="background:#5A6B5D" onclick="changeColor(['Mat_Base'], '#5A6B5D')"></button>
+                            </div>
+                        </div>
+
+                        <div class="option-group">
+                            <span class="option-label">Top Color</span>
+                            <div class="swatch-row">
+                                <button class="swatch" style="background:#F5F1E7" onclick="changeColor(['Mat_Top'], '#F5F1E7')"></button>
+                                <button class="swatch" style="background:#333333" onclick="changeColor(['Mat_Top'], '#333333')"></button>
+                                <button class="swatch" style="background:#5A6B5D" onclick="changeColor(['Mat_Top'], '#5A6B5D')"></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="selectDesign(this, 'site-assets-240.glb')">
+                        <span>Design 1: Core Container</span>
+                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </button>
+                    <div class="accordion-panel">
+                        
+                        <div class="option-group">
+                            <span class="option-label">Main Accent Color</span>
+                            <div class="swatch-row">
+                                <button class="swatch" style="background:#C0392B" onclick="changeColor(['Mat_DesignMain'], '#C0392B')"></button>
+                                <button class="swatch" style="background:#2980B9" onclick="changeColor(['Mat_DesignMain'], '#2980B9')"></button>
+                                <button class="swatch" style="background:#F39C12" onclick="changeColor(['Mat_DesignMain'], '#F39C12')"></button>
+                            </div>
+                        </div>
+
+                        <div class="option-group">
+                            <span class="option-label">Sub Accent Color</span>
+                            <div class="swatch-row">
+                                <button class="swatch" style="background:#FFFFFF" onclick="changeColor(['Mat_DesignAccent'], '#FFFFFF')"></button>
+                                <button class="swatch" style="background:#333333" onclick="changeColor(['Mat_DesignAccent'], '#333333')"></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="selectDesign(this, 'site-assets-241.glb')">
+                        <span>Design 2: Geometric</span>
+                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </button>
+                    <div class="accordion-panel">
+                        <div class="option-group">
+                            <span class="option-label">Geometric Color</span>
+                            <div class="swatch-row">
+                                <button class="swatch" style="background:#8E44AD" onclick="changeColor(['Mat_DesignMain'], '#8E44AD')"></button>
+                                <button class="swatch" style="background:#16A085" onclick="changeColor(['Mat_DesignMain'], '#16A085')"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <section class="config-viewer-area">
             <model-viewer id="product-viewer" 
-                src="https://raw.githack.com/AmpNine/rohmcore-st/main/site-assets-240.glb" 
+                src="https://raw.githack.com/AmpNine/rohmcore-site/main/assets/models/site-assets-240.glb" 
                 camera-controls shadow-intensity="1" environment-image="neutral" exposure="1" interaction-prompt="none" ar>
             </model-viewer>
-        </div>
-
-        <div class="product-details">
-            <div class="product-brand">RohmCore LLC</div>
-            <h1 class="product-title">Modular SinTin</h1>
-            <div class="product-price">$ 40 .00</div>
-
-            <div class="controls">
-                <span class="option-label">Design Collection</span>
-                <div class="button-group">
-                    <button class="variant-btn active" onclick="switchDesignPack('site-assets-240.glb', this)">Core Container</button>
-                    <button class="variant-btn" onclick="switchDesignPack('site-assets-241.glb', this)">Design Pack 01</button>
-                    <button class="variant-btn" onclick="switchDesignPack('site-assets-242.glb', this)">Design Pack 02</button>
+            
+            <div class="floating-checkout">
+                <div class="price-stack">
+                    <span class="price-label">Total</span>
+                    <span class="price-value">$40.00</span>
                 </div>
-
-                <span class="option-label">Base & Top Color</span>
-                <div class="swatch-row">
-                    <button class="swatch" style="background:#FFFFFF" onclick="changeColor(['Mat_Base', 'Mat_Top'], '#FFFFFF')"></button>
-                    <button class="swatch" style="background:#333333" onclick="changeColor(['Mat_Base', 'Mat_Top'], '#333333')"></button>
-                    <button class="swatch" style="background:#2ecc71" onclick="changeColor(['Mat_Base', 'Mat_Top'], '#2ecc71')"></button>
-                </div>
-
-                <span class="option-label">Design Accent Color</span>
-                <div class="swatch-row">
-                    <button class="swatch" style="background:#f1c40f" onclick="changeColor(['Mat_DesignMain', 'Mat_DesignAccent'], '#f1c40f')"></button>
-                    <button class="swatch" style="background:#3498db" onclick="changeColor(['Mat_DesignMain', 'Mat_DesignAccent'], '#3498db')"></button>
-                    <button class="swatch" style="background:#e74c3c" onclick="changeColor(['Mat_DesignMain', 'Mat_DesignAccent'], '#e74c3c')"></button>
-                </div>
+                <button class="btn-checkout">Done</button>
             </div>
+        </section>
 
-            <p class="product-desc">
-                Discover the ultimate modular container. Crafted with precision 3D printing, the SinTin allows you to instantly swap designs and colors to match your everyday carry.
-            </p>
-
-            <ul class="product-specs">
-                <li>Material: PLA 3D Printed Plastic</li>
-                <li>Dimensions: 4.25" x 4.25" x 1.25"</li>
-                <li>Weight: ~5 oz (Packaged)</li>
-                <li>Interchangeable top and base system</li>
-            </ul>
-
-            <button class="add-to-cart">Add to Cart</button>
-            <button class="shopify-placeholder">Buy with Shop</button>
-
-        </div>
     </main>
-
-    <section class="related-section">
-        <h2>You May Also Like</h2>
-        <div class="related-grid">
-            <div class="related-card">
-                <img src="assets/images/placeholder.jpg" alt="Related Product">
-                <div class="related-brand">RohmCore LLC</div>
-                <div class="related-title">SinTin - Geometric</div>
-                <div class="related-price">$ 40 .00</div>
-            </div>
-            <div class="related-card">
-                <img src="assets/images/placeholder.jpg" alt="Related Product">
-                <div class="related-brand">RohmCore LLC</div>
-                <div class="related-title">SinTin - Organic</div>
-                <div class="related-price">$ 40 .00</div>
-            </div>
-            <div class="related-card">
-                <img src="assets/images/placeholder.jpg" alt="Related Product">
-                <div class="related-brand">RohmCore LLC</div>
-                <div class="related-title">EDC Tray</div>
-                <div class="related-price">$ 25 .00</div>
-            </div>
-            <div class="related-card">
-                <img src="assets/images/placeholder.jpg" alt="Related Product">
-                <div class="related-brand">RohmCore LLC</div>
-                <div class="related-title">Custom Insert</div>
-                <div class="related-price">$ 15 .00</div>
-            </div>
-        </div>
-    </section>
 
     <footer>
     <div class="footer-links">

@@ -74,6 +74,132 @@ model-viewer { width: 100%; height: 600px; background-color: #ffffff; border: 1p
 .related-title { font-size: 14px; margin: 5px 0; font-weight: bold; }
 .related-price { font-size: 13px; }
 
+/* --- RHINOSHIELD CONFIGURATOR LAYOUT --- */
+.configurator-layout {
+    display: grid;
+    grid-template-columns: 350px 1fr; /* Left menu fixed width, viewer takes the rest */
+    min-height: 85vh;
+    background-color: #ffffff;
+    border-top: 1px solid var(--border);
+}
+
+/* Left Menu Styles */
+.config-sidebar {
+    background-color: #fafafa;
+    border-right: 1px solid var(--border);
+    padding: 30px 20px;
+    overflow-y: auto;
+}
+.config-title {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: var(--navy);
+}
+
+/* Accordions */
+.accordion-item {
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+}
+.accordion-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 15px 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-dark);
+    cursor: pointer;
+    text-align: left;
+}
+.accordion-header:hover {
+    color: var(--navy);
+}
+.accordion-header .chevron {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: transform 0.3s;
+}
+.accordion-item.active .chevron {
+    transform: rotate(180deg);
+}
+.accordion-panel {
+    display: none; /* Hidden by default via JS */
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+
+/* Swatches inside Accordion */
+.option-group {
+    margin-top: 15px;
+}
+.option-group .option-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #666;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Right Viewer Styles */
+.config-viewer-area {
+    position: relative;
+    background-color: #ffffff;
+}
+.config-viewer-area model-viewer {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+}
+
+/* Floating Checkout (Bottom Right) */
+.floating-checkout {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border: 1px solid var(--border);
+}
+.price-stack {
+    display: flex;
+    flex-direction: column;
+}
+.price-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #888;
+}
+.price-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--navy);
+}
+.btn-checkout {
+    background-color: #F1C40F; /* Matches Rhinoshield yellow */
+    color: var(--navy);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-checkout:hover {
+    transform: scale(1.05);
+}
+
 /* --- COOKIE BANNER --- */
 #cookie-banner {
     position: fixed;
