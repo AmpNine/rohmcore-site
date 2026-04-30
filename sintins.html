@@ -3,88 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SinTins | RohmCore</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>SinTins | RohmCore Configurator</title>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
     
     <style>
         /* =========================================
-           DESKTOP VIEW (Base Styles using VW / VH)
+           GLOBAL SETTINGS & TYPOGRAPHY
            ========================================= */
-        body, html { margin: 0; padding: 0; font-family: sans-serif; overflow-x: hidden; }
-        
-        .configurator-layout { display: flex; height: 100vh; width: 100vw; overflow: hidden; }
-        .config-sidebar { width: 30vw; padding: 4vh 2vw; border-right: 0.1vw solid #eee; overflow-y: auto; background: #fff; z-index: 10; }
-        .config-viewer-area { width: 70vw; height: 100vh; position: relative; background: #f9f9f9; }
-        model-viewer { width: 100%; height: 100%; }
-        
-        .breadcrumbs { font-size: 0.8vw; color: #888; margin-bottom: 1vh; text-transform: uppercase; }
-        .config-title { font-size: 2vw; margin-bottom: 4vh; color: #112A46; } /* Dark blue from your screenshot */
-        
-        .accordion-item { border-bottom: 0.1vw solid #eee; }
-        .accordion-header { display: flex; justify-content: space-between; align-items: center; width: 100%; background: none; border: none; padding: 2vh 0; cursor: pointer; }
-        .accordion-header span { font-size: 1.1vw; font-weight: bold; color: #333; }
-        .chevron { width: 1.5vw; transition: transform 0.3s ease; }
-        .accordion-item.active .chevron { transform: rotate(180deg); }
-        
-        .accordion-panel { display: none; padding: 1vh 0 3vh 0; }
-        .accordion-item.active .accordion-panel { display: block; }
-        
-        /* Options & Swatches */
-        .option-group { margin-bottom: 2vh; }
-        .option-label { font-size: 0.8vw; text-transform: uppercase; letter-spacing: 0.05vw; color: #666; display: block; margin-bottom: 1vh; }
-        .swatch-row { display: flex; gap: 0.8vw; }
-        .swatch { width: 2.5vw; height: 2.5vw; border-radius: 50%; border: 0.1vw solid #ccc; cursor: pointer; transition: transform 0.2s; }
-        .swatch:hover { transform: scale(1.1); border-color: #333; }
-        
-        .design-dropdown { width: 100%; padding: 1.5vh 1vw; font-size: 1vw; border: 0.1vw solid #333; border-radius: 0.3vw; background: white; cursor: pointer; }
-        .divider { border: 0; border-top: 0.1vw solid #eee; margin: 3vh 0; }
-        
-        /* Hide mobile-specific elements on desktop */
-        .mobile-popup-header { display: none; }
+        :root {
+            --navy: #112A46;
+            --border: #eee;
+            --text-main: #333;
+            /* Base 18px for human readability (1rem = 18px) */
+            font-size: 18px; 
+        }
+
+        body, html { 
+            margin: 0; padding: 0; 
+            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            overflow-x: hidden; 
+            background: #fff;
+        }
 
         /* =========================================
-           MOBILE VIEW (< 768px Breakpoint)
+           DESKTOP LAYOUT
+           ========================================= */
+        .configurator-layout { 
+            display: flex; 
+            height: 100vh; 
+            width: 100vw; 
+            overflow: hidden; 
+        }
+
+        .config-sidebar { 
+            width: 30vw; 
+            padding: 2rem; 
+            border-right: 1px solid var(--border); 
+            overflow-y: auto; 
+            background: #fafafa;
+        }
+
+        .config-viewer-area { 
+            width: 70vw; 
+            height: 100vh; 
+            position: relative; 
+            background: #f9f9f9;
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth shrink for mobile */
+        }
+
+        model-viewer { width: 100%; height: 100%; }
+
+        /* Typography */
+        .breadcrumbs { font-size: 0.7rem; color: #888; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .config-title { font-size: 1.8rem; margin-bottom: 2rem; color: var(--navy); font-weight: bold; }
+
+        /* Accordion Styles */
+        .accordion-item { border-bottom: 1px solid var(--border); }
+        .accordion-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            width: 100%; background: none; border: none; padding: 1rem 0; 
+            cursor: pointer; font-size: 1rem; font-weight: bold; color: var(--text-main);
+        }
+        .chevron { width: 1.2rem; transition: transform 0.3s; fill: #666; }
+        .accordion-item.active .chevron { transform: rotate(180deg); }
+        .accordion-panel { display: none; padding: 0.5rem 0 1.5rem 0; }
+        .accordion-item.active .accordion-panel { display: block; }
+
+        /* UI Elements */
+        .option-group { margin-bottom: 1.5rem; }
+        .option-label { font-size: 0.75rem; text-transform: uppercase; color: #666; margin-bottom: 0.5rem; display: block; }
+        .swatch-row { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .swatch { 
+            width: 2.2rem; height: 2.2rem; border-radius: 50%; 
+            border: 1px solid #ccc; cursor: pointer; transition: transform 0.2s; 
+        }
+        .swatch:hover { transform: scale(1.1); border-color: var(--navy); }
+        .design-dropdown { 
+            width: 100%; padding: 0.8rem; font-size: 0.9rem; 
+            border: 1px solid #333; border-radius: 4px; background: white; 
+        }
+
+        /* =========================================
+           MOBILE VIEW (< 768px)
            ========================================= */
         @media (max-width: 768px) {
             .configurator-layout { flex-direction: column; }
-            
-            /* Viewer takes top area */
-            .config-viewer-area { width: 100vw; height: 85vh; }
-            
-            /* Sidebar becomes Bottom Navigation */
-            .config-sidebar { position: fixed; bottom: 0; left: 0; width: 100vw; height: 15vh; padding: 0; border-top: 0.2vh solid #eee; display: flex; align-items: center; justify-content: center; box-shadow: 0 -0.5vh 2vw rgba(0,0,0,0.05); }
-            .breadcrumbs, .config-title { display: none; } /* Hidden on mobile to save space */
-            
-            .accordion-container { display: flex; width: 100%; justify-content: space-evenly; }
-            .accordion-item { border: none; flex: 1; text-align: center; }
-            .accordion-header { flex-direction: column; padding: 2vh 0; justify-content: center; }
-            .accordion-header span { font-size: 3.5vw; color: #888; }
-            .accordion-item.active .accordion-header span { color: #112A46; }
-            .chevron { display: none; } /* Hide chevron on mobile tabs */
-            
-            /* The Pop-up Drawer (Rhinoshield style) */
-            .accordion-panel { 
-                display: block; /* Override desktop none */
-                visibility: hidden;
-                position: fixed; bottom: 0; left: 0; width: 100vw; height: auto; max-height: 60vh; overflow-y: auto;
-                background: white; border-radius: 4vw 4vw 0 0; padding: 6vw 5vw 10vw 5vw; box-sizing: border-box;
-                box-shadow: 0 -1vh 4vw rgba(0,0,0,0.15); z-index: 20;
-                transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 0.3s;
-            }
-            .accordion-item.active .accordion-panel { visibility: visible; transform: translateY(0); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s; }
-            
-            /* Mobile Modal Header */
-            .mobile-popup-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2vh; border-bottom: 0.2vh solid #eee; margin-bottom: 3vh; position: relative; }
-            .mobile-popup-title { font-size: 4.5vw; font-weight: bold; color: #112A46; }
-            .mobile-close-btn { font-size: 4vw; background: none; border: none; font-weight: bold; color: #666; cursor: pointer; }
-            .drag-bar { position: absolute; top: -3vw; left: 50%; transform: translateX(-50%); width: 12vw; height: 1vw; background: #ddd; border-radius: 1vw; }
 
-            /* Upscale UI elements for touch targets */
-            .swatch { width: 12vw; height: 12vw; border-width: 0.5vw; margin-right: 2vw; }
-            .swatch-row { gap: 3vw; }
-            .option-label { font-size: 3.5vw; margin-bottom: 2vh; }
-            .design-dropdown { padding: 2vh 3vw; font-size: 4vw; border-width: 0.3vw; border-radius: 2vw; }
+            /* Default Viewer State */
+            .config-viewer-area { width: 100vw; height: 85vh; }
+
+            /* SHRINK STATE: Viewer gets smaller when a popup is open */
+            .menu-is-open .config-viewer-area { height: 40vh; }
+
+            /* Fixed Bottom Navigation */
+            .config-sidebar { 
+                position: fixed; bottom: 0; left: 0; width: 100vw; height: 15vh; 
+                padding: 0; border-top: 1px solid var(--border); 
+                display: flex; align-items: center; background: white; z-index: 10;
+            }
+
+            .accordion-container { display: flex; width: 100%; justify-content: space-evenly; }
+            .accordion-item { border: none; flex: 1; }
+            .accordion-header { flex-direction: column; padding: 1rem 0; height: 100%; }
+            .accordion-header span { font-size: 0.75rem; color: #888; }
+            .accordion-item.active .accordion-header span { color: var(--navy); font-weight: bold; }
+            .chevron { display: none; }
+            .breadcrumbs, .config-title { display: none; }
+
+            /* Mobile Popup Drawer */
+            .accordion-panel { 
+                display: block !important; visibility: hidden;
+                position: fixed; bottom: 0; left: 0; width: 100vw; 
+                max-height: 60vh; overflow-y: auto;
+                background: white; border-radius: 1.5rem 1.5rem 0 0; 
+                padding: 2rem 1.5rem; box-sizing: border-box;
+                box-shadow: 0 -10px 30px rgba(0,0,0,0.15); z-index: 20;
+                transform: translateY(100%); transition: transform 0.4s ease, visibility 0s 0.4s;
+            }
+            .accordion-item.active .accordion-panel { visibility: visible; transform: translateY(0); transition: transform 0.4s ease, visibility 0s; }
+
+            /* Mobile Header inside Popup */
+            .mobile-popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+            .mobile-popup-title { font-size: 1.1rem; font-weight: bold; color: var(--navy); }
+            .mobile-close-btn { font-size: 1rem; background: none; border: none; color: #007AFF; font-weight: 600; cursor: pointer; }
+
+            /* Larger swatches for touch */
+            .swatch { width: 3.5rem; height: 3.5rem; }
         }
     </style>
 </head>
@@ -96,7 +140,6 @@
             <h1 class="config-title">Modular SinTin</h1>
             
             <div class="accordion-container">
-                
                 <div class="accordion-item active">
                     <button class="accordion-header" onclick="toggleMenu(this)">
                         <span>Case Elements</span>
@@ -104,11 +147,9 @@
                     </button>
                     <div class="accordion-panel">
                         <div class="mobile-popup-header">
-                            <div class="drag-bar"></div>
                             <span class="mobile-popup-title">Case Colors</span>
-                            <button class="mobile-close-btn" onclick="closeMobilePopup(this)">Close</button>
+                            <button class="mobile-close-btn" onclick="closeMobilePopup(this)">Done</button>
                         </div>
-
                         <div class="option-group">
                             <span class="option-label">Top Color</span>
                             <div class="swatch-row">
@@ -130,39 +171,29 @@
 
                 <div class="accordion-item">
                     <button class="accordion-header" onclick="toggleMenu(this)">
-                        <span>Artwork Selection</span>
+                        <span>Artwork</span>
                         <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
                     </button>
                     <div class="accordion-panel">
                         <div class="mobile-popup-header">
-                            <div class="drag-bar"></div>
-                            <span class="mobile-popup-title">Choose Artwork</span>
-                            <button class="mobile-close-btn" onclick="closeMobilePopup(this)">Close</button>
+                            <span class="mobile-popup-title">Artwork Selection</span>
+                            <button class="mobile-close-btn" onclick="closeMobilePopup(this)">Done</button>
                         </div>
-
                         <select id="design-selector" class="design-dropdown" onchange="switchModel(this.value)">
+                            <option value="assets/models/site-assets-koi.glb" selected>Koi</option>
                             <option value="assets/models/site-assets-blankbar.glb">Blank Bar</option>
-                            <option value="assets/models/site-assets-koi.glb">Koi</option>
-                            <option value="assets/models/site-assets-lighthouse.glb">Lighthouse Sun</option>
                             <option value="assets/models/site-assets-wave.glb">The Wave</option>
-                            <option value="assets/models/site-assets-bonsai.glb">Bonsai Sun</option>
-                            <option value="assets/models/site-assets-ginkgo.glb">Ginkgo Leaf</option>
-                            <option value="assets/models/site-assets-monstera.glb">Monstera Sun</option>
                         </select>
-
-                        <hr class="divider">
-
-                        <div class="option-group">
-                            <span class="option-label">Design: Main Color</span>
+                        <div class="option-group" style="margin-top: 1.5rem;">
+                            <span class="option-label">Design Main</span>
                             <div class="swatch-row">
                                 <button class="swatch" style="background:#D9CAAF" onclick="changeColor('Mat_DesignMain', '#D9CAAF')"></button>
                                 <button class="swatch" style="background:#302A5A" onclick="changeColor('Mat_DesignMain', '#302A5A')"></button>
                                 <button class="swatch" style="background:#FF972F" onclick="changeColor('Mat_DesignMain', '#FF972F')"></button>
                             </div>
                         </div>
-
                         <div class="option-group">
-                            <span class="option-label">Design: Accent Color</span>
+                            <span class="option-label">Design Accent</span>
                             <div class="swatch-row">
                                 <button class="swatch" style="background:#D9CAAF" onclick="changeColor('Mat_DesignSub', '#D9CAAF')"></button>
                                 <button class="swatch" style="background:#302A5A" onclick="changeColor('Mat_DesignSub', '#302A5A')"></button>
@@ -171,21 +202,21 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </aside>
 
         <section class="config-viewer-area">
             <model-viewer 
                 id="product-viewer" 
-                src="site-assets-koi.glb" 
-                exposure="0.8" 
+                src="assets/models/site-assets-koi.glb" 
+                exposure="0.75" 
                 shadow-intensity="1"
-                camera-controls>
+                camera-controls 
+                touch-action="pan-y">
             </model-viewer>
         </section>
     </main>
 
-    <script type="module" src="js/configurator.js"></script>
+    <script src="js/configurator.js"></script>
 </body>
 </html>

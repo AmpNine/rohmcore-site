@@ -1,7 +1,6 @@
 const modelViewer = document.querySelector("#product-viewer");
 const layoutContainer = document.querySelector(".configurator-layout");
 
-// State persistence from your old code
 let currentConfiguration = {
     'Mat_Base': null, 
     'Mat_Top': null,
@@ -9,18 +8,16 @@ let currentConfiguration = {
     'Mat_DesignSub': null
 };
 
-// --- MENU LOGIC (Merged) ---
+// --- UI LOGIC ---
 window.toggleMenu = (button) => {
     const item = button.parentElement;
     const isActive = item.classList.contains('active');
     
-    // Close others
     document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
     
     if (!isActive) {
         item.classList.add('active');
-        // SHRINK logic: Only applies on mobile via CSS class
-        layoutContainer.classList.add('menu-is-open');
+        layoutContainer.classList.add('menu-is-open'); // Shrinks model-viewer on mobile
     } else {
         layoutContainer.classList.remove('menu-is-open');
     }
@@ -32,11 +29,7 @@ window.closeMobilePopup = (button) => {
     layoutContainer.classList.remove('menu-is-open');
 };
 
-// --- MODEL & COLOR LOGIC (Preserved from old code) ---
-window.switchModel = (newSrc) => {
-    modelViewer.src = newSrc;
-};
-
+// --- COLOR LOGIC ---
 window.changeColor = (materialName, hex) => {
     currentConfiguration[materialName] = hex; 
     applyColorToModel(materialName, hex);     
@@ -44,24 +37,21 @@ window.changeColor = (materialName, hex) => {
 
 function applyColorToModel(materialName, hex) {
     if (!modelViewer.model) return;
-    
     const material = modelViewer.model.materials.find(m => m.name === materialName);
+    
     if (material) {
         const rgb = hexToRgb(hex);
         
-        // Convert sRGB to Linear color space (Gamma Correction)
-        // This prevents the "washed out" look
+        // GAMMA CORRECTION: sRGB to Linear conversion
+        // Prevents the "washed out" look in 3D engines
         const rLinear = Math.pow(rgb.r / 255, 2.2);
         const gLinear = Math.pow(rgb.g / 255, 2.2);
         const bLinear = Math.pow(rgb.b / 255, 2.2);
         
         material.pbrMetallicRoughness.setBaseColorFactor([rLinear, gLinear, bLinear, 1]);
-    } else {
-        console.warn(`Material "${materialName}" not found.`);
     }
 }
 
-// Re-apply configuration when a new model loads
 modelViewer.addEventListener('load', () => {
     Object.keys(currentConfiguration).forEach(matName => {
         const savedColor = currentConfiguration[matName];
@@ -75,3 +65,7 @@ function hexToRgb(hex) {
     const b = parseInt(hex.slice(5, 7), 16);
     return {r, g, b};
 }
+
+window.switchModel = (newSrc) => {
+    modelViewer.src = newSrc;
+};
