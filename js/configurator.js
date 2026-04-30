@@ -32,10 +32,40 @@ window.closeMobilePopup = (button) => {
     layoutContainer.classList.remove('menu-is-open');
 };
 
-// --- MODEL & COLOR LOGIC (Preserved from old code) ---
+// 1. Update the switchModel function to trigger the highlight
 window.switchModel = (newSrc) => {
     modelViewer.src = newSrc;
+    updateDropdownLabels(newSrc); // Trigger the visual highlight
 };
+
+// 2. The logic to add the dot and bolding
+function updateDropdownLabels(activeSrc) {
+    const selector = document.querySelector("#design-selector");
+    const options = selector.options;
+
+    for (let i = 0; i < options.length; i++) {
+        let opt = options[i];
+        
+        // Clean up: Remove any existing dots and bolding marks
+        // We use a regex to remove the dot and any leading/trailing whitespace
+        let cleanName = opt.text.replace('• ', '').replace(' (Selected)', '');
+        
+        if (opt.value === activeSrc) {
+            // Add the visual indicators
+            opt.text = `• ${cleanName}`; 
+            opt.style.fontWeight = "bold"; // Works in some browsers (Chrome/Firefox)
+        } else {
+            // Reset others
+            opt.text = cleanName;
+            opt.style.fontWeight = "normal";
+        }
+    }
+}
+
+// 3. Run it once on page load to set the initial "Koi" highlight
+window.addEventListener('DOMContentLoaded', () => {
+    updateDropdownLabels(modelViewer.src);
+});
 
 window.changeColor = (materialName, hex) => {
     currentConfiguration[materialName] = hex; 
