@@ -44,10 +44,20 @@ window.changeColor = (materialName, hex) => {
 
 function applyColorToModel(materialName, hex) {
     if (!modelViewer.model) return;
+    
     const material = modelViewer.model.materials.find(m => m.name === materialName);
     if (material) {
         const rgb = hexToRgb(hex);
-        material.pbrMetallicRoughness.setBaseColorFactor([rgb.r/255, rgb.g/255, rgb.b/255, 1]);
+        
+        // Convert sRGB to Linear color space (Gamma Correction)
+        // This prevents the "washed out" look
+        const rLinear = Math.pow(rgb.r / 255, 2.2);
+        const gLinear = Math.pow(rgb.g / 255, 2.2);
+        const bLinear = Math.pow(rgb.b / 255, 2.2);
+        
+        material.pbrMetallicRoughness.setBaseColorFactor([rLinear, gLinear, bLinear, 1]);
+    } else {
+        console.warn(`Material "${materialName}" not found.`);
     }
 }
 
