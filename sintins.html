@@ -62,14 +62,14 @@
                         <svg class="chevron" viewBox="0 0 24 24" width="20"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
                     </button>
                     <div class="accordion-panel">
-                        <select id="design-selector" class="design-dropdown" onchange="selectDesign(this.value)">
-                            <option value="Blank_Bar">Blank Bar</option>
-                            <option value="Koi">Koi</option>
-                            <option value="LighthouseSun">Lighthouse Sun</option>
-                            <option value="Wave">The Wave</option>
-                            <option value="BonsaiSun">Bonsai Sun</option>
-                            <option value="Ginkgo">Ginkgo Leaf</option>
-                            <option value="MonsteraSun">Monstera Sun</option>
+                        <select id="design-selector" class="design-dropdown" onchange="switchModel(this.value)">
+                            <option value="assets/models/site-assets-blankbar.glb">Blank Bar</option>
+                            <option value="assets/models/site-assets-koi.glb">Koi</option>
+                            <option value="assets/models/site-assets-lighthouse.glb">Lighthouse Sun</option>
+                            <option value="assets/models/site-assets-wave.glb">The Wave</option>
+                            <option value="assets/models/site-assets-bonsai.glb">Bonsai Sun</option>
+                            <option value="assets/models/site-assets-ginkgo.glb">Ginkgo Leaf</option>
+                            <option value="assets/models/site-assets-monstera.glb">Monstera Sun</option>
                         </select>
 
                         <hr class="divider">
@@ -99,7 +99,7 @@
 
         <section class="config-viewer-area">
             <model-viewer id="product-viewer" 
-                src="assets/models/site-assets-1.glb" 
+                src="assets/models/site-assets-blankbar.glb" 
                 camera-controls 
                 shadow-intensity="1" 
                 environment-image="neutral" 

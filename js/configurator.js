@@ -1,15 +1,12 @@
 const modelViewer = document.querySelector("#product-viewer");
 
-// MUST MATCH YOUR RHINO LAYER NAMES EXACTLY
-const allDesignLayers = [
-    'Blank_Bar', 
-    'Koi', 
-    'LighthouseSun', 
-    'Wave', 
-    'BonsaiSun', 
-    'Ginkgo', 
-    'MonsteraSun'
-];
+// State object to remember the user's color choices across model swaps
+let currentConfiguration = {
+    'Mat_Base': null, 
+    'Mat_Top': null,
+    'Mat_DesignMain': null,
+    'Mat_DesignSub': null
+};
 
 // --- 1. ACCORDION LOGIC ---
 window.toggleMenu = (button) => {
@@ -17,26 +14,19 @@ window.toggleMenu = (button) => {
     item.classList.toggle('active');
 };
 
-// --- 2. DESIGN SWITCHER ---
-window.selectDesign = (targetLayerName) => {
-    if (!modelViewer.model) return;
-
-    allDesignLayers.forEach((layerName) => {
-        // Find all parts (nodes) that belong to this layer
-        const nodes = modelViewer.model.nodes.filter(n => n.name.includes(layerName));
-        
-        nodes.forEach(node => {
-            if (layerName === targetLayerName) {
-                node.show();
-            } else {
-                node.hide();
-            }
-        });
-    });
+// --- 2. MODEL SWITCHER ---
+window.switchModel = (newSrc) => {
+    modelViewer.src = newSrc;
 };
 
-// --- 3. COLOR CHANGER ---
+// --- 3. COLOR CHANGER & PERSISTENCE ---
 window.changeColor = (materialName, hex) => {
+    // Save the choice so it persists when switching designs
+    currentConfiguration[materialName] = hex; 
+    applyColorToModel(materialName, hex);     
+};
+
+function applyColorToModel(materialName, hex) {
     if (!modelViewer.model) return;
     
     // Find the specific material assigned in Rhino
@@ -47,9 +37,19 @@ window.changeColor = (materialName, hex) => {
         // Apply the color [R, G, B, Alpha]
         material.pbrMetallicRoughness.setBaseColorFactor([rgb.r/255, rgb.g/255, rgb.b/255, 1]);
     } else {
-        console.warn(`Material "${materialName}" not found in model.`);
+        console.warn(`Material "${materialName}" not found in this model.`);
     }
-};
+}
+
+// Every time a new model finishes loading, re-apply the saved colors
+modelViewer.addEventListener('load', () => {
+    Object.keys(currentConfiguration).forEach(matName => {
+        const savedColor = currentConfiguration[matName];
+        if (savedColor) {
+            applyColorToModel(matName, savedColor);
+        }
+    });
+});
 
 // Helper: Hex to RGB conversion
 function hexToRgb(hex) {
@@ -58,8 +58,3 @@ function hexToRgb(hex) {
     const b = parseInt(hex.slice(5, 7), 16);
     return {r, g, b};
 }
-
-// Initialize: Hide everything except the first design when the model loads
-modelViewer.addEventListener('load', () => {
-    window.selectDesign('Blank_Bar');
-});
