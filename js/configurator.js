@@ -1,5 +1,7 @@
 const modelViewer = document.querySelector("#product-viewer");
+const layoutContainer = document.querySelector(".configurator-layout");
 
+// State persistence from your old code
 let currentConfiguration = {
     'Mat_Base': null, 
     'Mat_Top': null,
@@ -7,33 +9,34 @@ let currentConfiguration = {
     'Mat_DesignSub': null
 };
 
-// --- 1. MENU LOGIC (Updated for Mobile Tabs) ---
+// --- MENU LOGIC (Merged) ---
 window.toggleMenu = (button) => {
     const item = button.parentElement;
+    const isActive = item.classList.contains('active');
     
-    // If we are on mobile (screen width 768px or less), close all other panels first
-    if (window.innerWidth <= 768) {
-        const allItems = document.querySelectorAll('.accordion-item');
-        allItems.forEach(i => {
-            if (i !== item) i.classList.remove('active');
-        });
+    // Close others
+    document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+    
+    if (!isActive) {
+        item.classList.add('active');
+        // SHRINK logic: Only applies on mobile via CSS class
+        layoutContainer.classList.add('menu-is-open');
+    } else {
+        layoutContainer.classList.remove('menu-is-open');
     }
-    
-    item.classList.toggle('active');
 };
 
-// New function to handle the "Close" button inside the mobile popups
 window.closeMobilePopup = (button) => {
     const item = button.closest('.accordion-item');
     if(item) item.classList.remove('active');
+    layoutContainer.classList.remove('menu-is-open');
 };
 
-// --- 2. MODEL SWITCHER ---
+// --- MODEL & COLOR LOGIC (Preserved from old code) ---
 window.switchModel = (newSrc) => {
     modelViewer.src = newSrc;
 };
 
-// --- 3. COLOR CHANGER & PERSISTENCE ---
 window.changeColor = (materialName, hex) => {
     currentConfiguration[materialName] = hex; 
     applyColorToModel(materialName, hex);     
@@ -41,22 +44,18 @@ window.changeColor = (materialName, hex) => {
 
 function applyColorToModel(materialName, hex) {
     if (!modelViewer.model) return;
-    
     const material = modelViewer.model.materials.find(m => m.name === materialName);
     if (material) {
         const rgb = hexToRgb(hex);
         material.pbrMetallicRoughness.setBaseColorFactor([rgb.r/255, rgb.g/255, rgb.b/255, 1]);
-    } else {
-        console.warn(`Material "${materialName}" not found in this model.`);
     }
 }
 
+// Re-apply configuration when a new model loads
 modelViewer.addEventListener('load', () => {
     Object.keys(currentConfiguration).forEach(matName => {
         const savedColor = currentConfiguration[matName];
-        if (savedColor) {
-            applyColorToModel(matName, savedColor);
-        }
+        if (savedColor) applyColorToModel(matName, savedColor);
     });
 });
 

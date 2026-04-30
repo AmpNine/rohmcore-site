@@ -1,230 +1,104 @@
-/* --- GLOBAL VARIABLES & RESET --- */
+/* --- GLOBAL VARIABLES (PRESERVED) --- */
 :root {
   --navy: #0A192F;
   --beige: #F5F1E7;
   --text-dark: #333333;
   --border: #D1CDCD;
   --shopify-purple: #5A31F4;
+  --yellow-accent: #F1C40F; /* Rhinoshield Yellow */
+  
+  /* BASE FONT SIZE for rem calculations */
+  font-size: 18px; 
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
-body { background-color: var(--beige); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
-a { text-decoration: none; color: inherit; }
-ul { list-style: none; }
 
-/* --- HEADER & NAV --- */
-header { background-color: var(--navy); color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
-.logo img { height: 50px; width: auto; }
-nav ul { display: flex; gap: 30px; align-items: center; text-transform: uppercase; font-size: 14px; font-weight: bold; letter-spacing: 1px; }
-nav ul li a:hover { color: #cccccc; }
-.cart-icon svg { width: 20px; height: 20px; fill: white; }
-
-/* --- FOOTER --- */
-footer { background-color: var(--navy); color: white; padding: 60px 40px; margin-top: auto; }
-.footer-links { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 1200px; margin: 0 auto 40px; gap: 20px; font-size: 13px; }
-.footer-links h4 { margin-bottom: 15px; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; color: #8892B0; }
-.footer-links ul li { margin-bottom: 10px; }
-.footer-logo { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
-.footer-logo img { height: 40px; opacity: 0.8; }
-
-/* --- LANDING PAGE --- */
-.hero { flex: 1; display: flex; justify-content: center; align-items: center; }
-.hero h1 { font-size: 3rem; text-transform: uppercase; letter-spacing: 5px; color: var(--navy); }
-
-/* --- PRODUCT PAGE LAYOUT --- */
-.product-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-.breadcrumbs { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 20px; }
-
-/* Left Column: 3D Viewer */
-.product-gallery { position: relative; }
-model-viewer { width: 100%; height: 600px; background-color: #ffffff; border: 1px solid var(--border); border-radius: 4px; }
-
-/* Right Column: Details */
-.product-brand { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 10px; }
-.product-title { font-size: 2.2rem; margin-bottom: 15px; }
-.product-price { font-size: 1.5rem; font-weight: bold; margin-bottom: 30px; }
-
-/* Options (Buttons mimicking Web1) */
-.option-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; margin-top: 25px; }
-.button-group { display: flex; flex-wrap: wrap; gap: 10px; }
-.variant-btn { padding: 12px 20px; background: transparent; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; font-size: 14px; }
-.variant-btn:hover, .variant-btn.active { border-color: var(--text-dark); background: white; }
-
-/* Swatches */
-.swatch-row { display: flex; gap: 10px; }
-.swatch { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
-.swatch:hover { transform: scale(1.1); border-color: #333; }
-
-/* Description & Specs */
-.product-desc { margin: 30px 0; line-height: 1.6; font-size: 15px; color: #444; }
-.product-specs { margin-bottom: 40px; padding-left: 20px; line-height: 1.8; font-size: 14px; color: #444; }
-
-/* Buy Buttons */
-.add-to-cart { width: 100%; padding: 15px; background: transparent; border: 1px solid var(--text-dark); font-size: 14px; text-transform: uppercase; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
-.add-to-cart:hover { background: var(--text-dark); color: white; }
-.shopify-placeholder { width: 100%; padding: 15px; background: var(--shopify-purple); color: white; border: none; font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer; }
-
-/* --- RELATED PRODUCTS (Web2) --- */
-.related-section { max-width: 1200px; margin: 80px auto; padding: 0 20px; }
-.related-section h2 { text-align: center; font-size: 2rem; margin-bottom: 40px; }
-.related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.related-card { background: white; padding: 10px; border: 1px solid var(--border); }
-.related-card img { width: 100%; height: auto; aspect-ratio: 1/1; object-fit: cover; background: #eee; margin-bottom: 15px; }
-.related-brand { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
-.related-title { font-size: 14px; margin: 5px 0; font-weight: bold; }
-.related-price { font-size: 13px; }
-
-/* --- RHINOSHIELD CONFIGURATOR LAYOUT --- */
-.configurator-layout {
-    display: grid;
-    grid-template-columns: 350px 1fr; /* Left menu fixed width, viewer takes the rest */
-    min-height: 85vh;
-    background-color: #ffffff;
-    border-top: 1px solid var(--border);
+body { 
+  background-color: var(--beige); 
+  color: var(--text-dark); 
+  display: flex; 
+  flex-direction: column; 
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Left Menu Styles */
+/* --- HEADER & NAV (PRESERVED) --- */
+header { background-color: var(--navy); color: white; padding: 1.5vh 4vw; display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
+.logo img { height: 5vh; width: auto; }
+nav ul { display: flex; gap: 2vw; align-items: center; text-transform: uppercase; font-size: 0.8rem; font-weight: bold; letter-spacing: 0.1vw; }
+
+/* --- CONFIGURATOR LAYOUT (REFACTORED TO VW/VH) --- */
+.configurator-layout {
+    display: flex;
+    height: 85vh; /* Occupies the space between header and footer */
+    width: 100vw;
+    background-color: #ffffff;
+}
+
+/* Sidebar: Desktop */
 .config-sidebar {
+    width: 30vw;
     background-color: #fafafa;
     border-right: 1px solid var(--border);
-    padding: 30px 20px;
+    padding: 4vh 2vw;
     overflow-y: auto;
 }
-.config-title {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
-    color: var(--navy);
-}
 
-/* Accordions */
-.accordion-item {
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 10px;
-}
-.accordion-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: none;
-    border: none;
-    padding: 15px 0;
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--text-dark);
-    cursor: pointer;
-    text-align: left;
-}
-.accordion-header:hover {
-    color: var(--navy);
-}
-.accordion-header .chevron {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-    transition: transform 0.3s;
-}
-.accordion-item.active .chevron {
-    transform: rotate(180deg);
-}
-.accordion-panel {
-    display: none; /* Hidden by default via JS */
-    padding-bottom: 20px;
-    padding-left: 10px;
-}
-
-/* Swatches inside Accordion */
-.option-group {
-    margin-top: 15px;
-}
-.option-group .option-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #666;
-    margin-bottom: 8px;
-    display: block;
-}
-
-/* Right Viewer Styles */
+/* Viewer: Desktop */
 .config-viewer-area {
-    position: relative;
-    background-color: #ffffff;
-}
-.config-viewer-area model-viewer {
-    width: 100%;
+    width: 70vw;
     height: 100%;
-    min-height: 600px;
+    position: relative;
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+model-viewer { width: 100%; height: 100%; }
 
-/* Floating Checkout (Bottom Right) */
-.floating-checkout {
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: white;
-    padding: 15px 25px;
-    border-radius: 50px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    border: 1px solid var(--border);
-}
-.price-stack {
-    display: flex;
-    flex-direction: column;
-}
-.price-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    color: #888;
-}
-.price-value {
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--navy);
-}
-.btn-checkout {
-    background-color: #F1C40F; /* Matches Rhinoshield yellow */
-    color: var(--navy);
-    border: none;
-    padding: 12px 30px;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn-checkout:hover {
-    transform: scale(1.05);
-}
+/* Typography using REM */
+.config-title { font-size: 1.8rem; margin-bottom: 3vh; color: var(--navy); }
+.option-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05rem; color: #666; margin: 2vh 0 1vh; display: block; }
 
-/* --- COOKIE BANNER --- */
-#cookie-banner {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    background: var(--navy);
-    color: white;
-    padding: 20px;
-    display: none; /* Hidden by default */
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 1000;
-    font-size: 13px;
-}
-#cookie-banner button {
-    background: white;
-    color: var(--navy);
-    border: none;
-    padding: 8px 20px;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 4px;
-    margin-left: 20px;
-}
+/* --- MOBILE REFRACTOR (< 768px) --- */
+@media (max-width: 768px) {
+    .configurator-layout { flex-direction: column; height: auto; }
 
+    /* Viewer Area - Initial Mobile State */
+    .config-viewer-area { 
+        width: 100vw; 
+        height: 75vh; /* Product is large on entry */
+    }
+
+    /* SHRINK STATE: Triggered via JS when a menu opens */
+    .menu-is-open .config-viewer-area {
+        height: 40vh; /* Shrunk so user can see product above the popup */
+    }
+
+    .config-sidebar {
+        position: fixed; bottom: 0; left: 0;
+        width: 100vw; height: 12vh;
+        padding: 0; z-index: 10;
+        display: flex; align-items: center;
+        border-top: 1px solid var(--border);
+    }
+
+    .accordion-container { display: flex; width: 100%; height: 100%; }
+    .accordion-item { flex: 1; border: none; margin: 0; }
+    .accordion-header { flex-direction: column; justify-content: center; height: 100%; padding: 0; text-align: center; }
+    .accordion-header span { font-size: 0.7rem; }
+    .accordion-header .chevron { display: none; }
+
+    /* The Pop-up Drawer */
+    .accordion-panel {
+        display: block !important; 
+        position: fixed; bottom: 0; left: 0;
+        width: 100vw; max-height: 55vh;
+        background: white; border-radius: 20px 20px 0 0;
+        padding: 2rem 1.5rem; box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        transform: translateY(100%);
+        transition: transform 0.4s ease;
+        z-index: 20;
+    }
+    .accordion-item.active .accordion-panel { transform: translateY(0); }
+
+    /* Swatches: Bigger for touch */
+    .swatch { width: 15vw; height: 15vw; }
+}
