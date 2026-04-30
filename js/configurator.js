@@ -44,10 +44,19 @@ window.changeColor = (materialName, hex) => {
 
 function applyColorToModel(materialName, hex) {
     if (!modelViewer.model) return;
+    
     const material = modelViewer.model.materials.find(m => m.name === materialName);
     if (material) {
-        const rgb = hexToRgb(hex);
-        material.pbrMetallicRoughness.setBaseColorFactor([rgb.r/255, rgb.g/255, rgb.b/255, 1]);
+        const rgb = hexToRgb(hex); // Ensure you have your hexToRgb helper function
+        
+        // The "Secret Sauce": Gamma Correction
+        // We divide by 255 to get a 0-1 scale, then apply the 2.2 power
+        const rLinear = Math.pow(rgb.r / 255, 2.2);
+        const gLinear = Math.pow(rgb.g / 255, 2.2);
+        const bLinear = Math.pow(rgb.b / 255, 2.2);
+        
+        // Apply the corrected linear values to the model
+        material.pbrMetallicRoughness.setBaseColorFactor([rLinear, gLinear, bLinear, 1]);
     }
 }
 
