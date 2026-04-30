@@ -67,10 +67,33 @@ window.addEventListener('DOMContentLoaded', () => {
     updateDropdownLabels(modelViewer.src);
 });
 
-window.changeColor = (materialName, hex) => {
+// 1. Set your initial color state
+let currentConfiguration = {
+    'Mat_Base': '#D9CAAF', 
+    'Mat_Top': '#D9CAAF',
+    'Mat_DesignMain': '#302A5A',
+    'Mat_DesignSub': '#FF972F'
+};
+
+// 2. Update changeColor to handle the UI ring
+window.changeColor = (materialName, hex, element) => {
+    // If an element (button) was clicked, manage the "selected" class
+    if (element) {
+        const row = element.closest('.swatch-row');
+        row.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
     currentConfiguration[materialName] = hex; 
     applyColorToModel(materialName, hex);     
 };
+
+// 3. Ensure the initial colors are applied as soon as the model loads
+modelViewer.addEventListener('load', () => {
+    Object.keys(currentConfiguration).forEach(matName => {
+        applyColorToModel(matName, currentConfiguration[matName]);
+    });
+});
 
 function applyColorToModel(materialName, hex) {
     if (!modelViewer.model) return;
