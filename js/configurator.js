@@ -1,22 +1,23 @@
 const modelViewer = document.querySelector("#product-viewer");
 
-// Application State
+// --- 1. APPLICATION STATE ---
 let config = {
-    'TopColor': '#D9CAAF',
-    'BaseColor': '#D9CAAF',
-    'DesignMain': '#302A5A',
-    'DesignSub': '#FF972F',
-    'ActiveBase': 'Mat_Base_Blank' // This matches your Rhino material name
+    'Mat_Top': '#D9CAAF',
+    'Mat_Base': '#D9CAAF',
+    'Mat_DesignMain': '#302A5A',
+    'Mat_DesignSub': '#FF972F',
+    'ActiveBase': 'Mat_Base_Blank' // Default shape
 };
 
-const ALL_BASES = ['Mat_Base_Blank', 'Mat_Base_Ring', 'Mat_Base_Keychain', 'Mat_Base_CHargingHandle'];
+// Exact Rhino material names
+const ALL_BASES = ['Mat_Base_Blank', 'Mat_Base_Ring', 'Mat_Base_Keychain', 'Mat_Base_ChargingHandle'];
 
-// Change which base is visible
+// --- 2. MATERIAL & SHAPE LOGIC ---
 window.changeBaseShape = (baseName, element) => {
     // UI: Update selected button state
     if (element) {
         const row = element.closest('.style-row');
-        row.querySelectorAll('.style-btn').forEach(s => s.classList.remove('selected'));
+        if(row) row.querySelectorAll('.style-btn').forEach(s => s.classList.remove('selected'));
         element.classList.add('selected');
     }
     
@@ -25,30 +26,32 @@ window.changeBaseShape = (baseName, element) => {
 };
 
 window.changeColor = (part, hex, element) => {
+    // UI: Update selected swatch state
     if (element) {
         const row = element.closest('.swatch-row');
-        row.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+        if(row) row.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
         element.classList.add('selected');
     }
+    
     config[part] = hex; 
     applyAllMaterials();     
 };
 
 function applyAllMaterials() {
-    if (!modelViewer.model) return;
+    if (!modelViewer.model || !modelViewer.model.materials) return;
 
     // Apply standard colors
-    applyColorToMaterial('Mat_Top', config.TopColor, 1);
-    applyColorToMaterial('Mat_DesignMain', config.DesignMain, 1);
-    applyColorToMaterial('Mat_DesignSub', config.DesignSub, 1);
+    applyColorToMaterial('Mat_Top', config['Mat_Top'], 1);
+    applyColorToMaterial('Mat_DesignMain', config['Mat_DesignMain'], 1);
+    applyColorToMaterial('Mat_DesignSub', config['Mat_DesignSub'], 1);
 
     // Visibility Logic for the 4 Bases
     ALL_BASES.forEach(baseName => {
         const isVisible = (baseName === config.ActiveBase);
-        const alpha = isVisible ? 1 : 0;
+        const alpha = isVisible ? 1 : 0; 
         
-        // We apply the same BaseColor to all, but only the active one is shown
-        applyColorToMaterial(baseName, config.BaseColor, alpha);
+        // We apply the same BaseColor to all, but only the active one gets 100% alpha
+        applyColorToMaterial(baseName, config['Mat_Base'], alpha);
     });
 }
 
@@ -72,4 +75,21 @@ function hexToRgb(hex) {
     return {r, g, b};
 }
 
+// --- 3. UI ACCORDION & MODEL SWITCHING LOGIC ---
+
+window.toggleMenu = (btn) => {
+    const item = btn.closest('.accordion-item');
+    item.classList.toggle('active');
+};
+
+window.closeMobilePopup = (btn) => {
+    const item = btn.closest('.accordion-item');
+    item.classList.remove('active');
+};
+
+window.switchModel = (url) => {
+    modelViewer.src = url;
+};
+
+// Re-apply colors and shapes every time a new .glb finishes loading
 modelViewer.addEventListener('load', applyAllMaterials);
