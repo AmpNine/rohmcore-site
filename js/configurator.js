@@ -63,7 +63,8 @@ function applyColorToMaterial(materialName, hex, alpha) {
         const g = Math.pow(rgb.g / 255, 2.2);
         const b = Math.pow(rgb.b / 255, 2.2);
         
-        // [Red, Green, Blue, Alpha]
+        material.setAlphaMode(alpha < 1 ? 'BLEND' : 'OPAQUE');
+        
         material.pbrMetallicRoughness.setBaseColorFactor([r, g, b, alpha]);
     }
 }
