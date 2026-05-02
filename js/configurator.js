@@ -1,107 +1,75 @@
 const modelViewer = document.querySelector("#product-viewer");
-const layoutContainer = document.querySelector(".configurator-layout");
 
-// 1. Initial Color State (Declared ONLY ONCE)
-let currentConfiguration = {
-    'Mat_Base': '#D9CAAF', 
-    'Mat_Top': '#D9CAAF',
-    'Mat_DesignMain': '#302A5A',
-    'Mat_DesignSub': '#FF972F'
+// Application State
+let config = {
+    'TopColor': '#D9CAAF',
+    'BaseColor': '#D9CAAF',
+    'DesignMain': '#302A5A',
+    'DesignSub': '#FF972F',
+    'ActiveBase': 'Mat_Base_Blank' // This matches your Rhino material name
 };
 
-// --- MENU & UI LOGIC ---
+const ALL_BASES = ['Mat_Base_Blank', 'Mat_Base_Ring', 'Mat_Base_Keychain', 'Mat_Base_CHargingHandle'];
 
-window.toggleMenu = (button) => {
-    const item = button.parentElement;
-    const isActive = item.classList.contains('active');
-    
-    // Close others
-    document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
-    
-    if (!isActive) {
-        item.classList.add('active');
-        layoutContainer.classList.add('menu-is-open');
-    } else {
-        layoutContainer.classList.remove('menu-is-open');
+// Change which base is visible
+window.changeBaseShape = (baseName, element) => {
+    // UI: Update selected button state
+    if (element) {
+        const row = element.closest('.style-row');
+        row.querySelectorAll('.style-btn').forEach(s => s.classList.remove('selected'));
+        element.classList.add('selected');
     }
+    
+    config.ActiveBase = baseName;
+    applyAllMaterials();
 };
 
-window.closeMobilePopup = (button) => {
-    const item = button.closest('.accordion-item');
-    if(item) item.classList.remove('active');
-    layoutContainer.classList.remove('menu-is-open');
-};
-
-function updateDropdownLabels(activeSrc) {
-    const selector = document.querySelector("#design-selector");
-    const options = selector.options;
-
-    for (let i = 0; i < options.length; i++) {
-        let opt = options[i];
-        
-        let cleanName = opt.text.replace('• ', '').replace(' (Selected)', '');
-        
-        if (opt.value === activeSrc) {
-            opt.text = `• ${cleanName}`; 
-            opt.style.fontWeight = "bold"; 
-        } else {
-            opt.text = cleanName;
-            opt.style.fontWeight = "normal";
-        }
-    }
-}
-
-// --- 3D MODEL & COLOR LOGIC ---
-
-window.switchModel = (newSrc) => {
-    modelViewer.src = newSrc;
-    updateDropdownLabels(newSrc); 
-};
-
-window.changeColor = (materialName, hex, element) => {
-    // UI selection ring
+window.changeColor = (part, hex, element) => {
     if (element) {
         const row = element.closest('.swatch-row');
         row.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
         element.classList.add('selected');
     }
-
-    currentConfiguration[materialName] = hex; 
-    applyColorToModel(materialName, hex);     
+    config[part] = hex; 
+    applyAllMaterials();     
 };
 
-function applyColorToModel(materialName, hex) {
+function applyAllMaterials() {
     if (!modelViewer.model) return;
-    
+
+    // Apply standard colors
+    applyColorToMaterial('Mat_Top', config.TopColor, 1);
+    applyColorToMaterial('Mat_DesignMain', config.DesignMain, 1);
+    applyColorToMaterial('Mat_DesignSub', config.DesignSub, 1);
+
+    // Visibility Logic for the 4 Bases
+    ALL_BASES.forEach(baseName => {
+        const isVisible = (baseName === config.ActiveBase);
+        const alpha = isVisible ? 1 : 0;
+        
+        // We apply the same BaseColor to all, but only the active one is shown
+        applyColorToMaterial(baseName, config.BaseColor, alpha);
+    });
+}
+
+function applyColorToMaterial(materialName, hex, alpha) {
     const material = modelViewer.model.materials.find(m => m.name === materialName);
     if (material) {
-        const rgb = hexToRgb(hex); 
+        const rgb = hexToRgb(hex);
+        const r = Math.pow(rgb.r / 255, 2.2);
+        const g = Math.pow(rgb.g / 255, 2.2);
+        const b = Math.pow(rgb.b / 255, 2.2);
         
-        // Gamma Correction for accurate rendering
-        const rLinear = Math.pow(rgb.r / 255, 2.2);
-        const gLinear = Math.pow(rgb.g / 255, 2.2);
-        const bLinear = Math.pow(rgb.b / 255, 2.2);
-        
-        material.pbrMetallicRoughness.setBaseColorFactor([rLinear, gLinear, bLinear, 1]);
+        // [Red, Green, Blue, Alpha]
+        material.pbrMetallicRoughness.setBaseColorFactor([r, g, b, alpha]);
     }
 }
 
-// Ensure the initial colors apply on load
-modelViewer.addEventListener('load', () => {
-    Object.keys(currentConfiguration).forEach(matName => {
-        applyColorToModel(matName, currentConfiguration[matName]);
-    });
-});
-
-// Run once on page load to set the initial "Koi" highlight in the dropdown
-window.addEventListener('DOMContentLoaded', () => {
-    updateDropdownLabels(modelViewer.src);
-});
-
-// Utility function
 function hexToRgb(hex) {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
     return {r, g, b};
 }
+
+modelViewer.addEventListener('load', applyAllMaterials);

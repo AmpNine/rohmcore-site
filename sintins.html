@@ -102,6 +102,7 @@
                         <span>Case Elements</span>
                         <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
                     </button>
+
                     <div class="accordion-panel">
                         <div class="mobile-popup-header">
                             <div class="drag-bar"></div>
@@ -109,22 +110,33 @@
                             <button class="mobile-close-btn" onclick="closeMobilePopup(this)">Close</button>
                         </div>
 
-                        <div class="option-group">
-                            <span class="option-label">Top Color</span>
-                            <div class="swatch-row">
-                                <button class="swatch" style="background:#D9CAAF" onclick="changeColor('Mat_Top', '#D9CAAF', this)"></button>
-                                <button class="swatch" style="background:#322D7C" onclick="changeColor('Mat_Top', '#302A5A', this)"></button>
-                                <button class="swatch" style="background:#FF972F" onclick="changeColor('Mat_Top', '#FF972F', this)"></button>
-                            </div>
+                    <div class="option-group">
+                        <span class="option-label">Base Shape</span>
+                        <div class="style-row">
+                            <button class="style-btn selected" onclick="changeBaseShape('Mat_Base_1', this)">Original</button>
+                            <button class="style-btn" onclick="changeBaseShape('Mat_Base_2', this)">Rounded</button>
+                            <button class="style-btn" onclick="changeBaseShape('Mat_Base_3', this)">Slim</button>
+                            <button class="style-btn" onclick="changeBaseShape('Mat_Base_4', this)">Rugged</button>
                         </div>
-                        <div class="option-group">
-                            <span class="option-label">Base Color</span>
-                            <div class="swatch-row">
-                                <button class="swatch" style="background:#D9CAAF" onclick="changeColor('Mat_Base', '#D9CAAF', this)"></button>
-                                <button class="swatch" style="background:#302A5A" onclick="changeColor('Mat_Base', '#302A5A', this)"></button>
-                                <button class="swatch" style="background:#FF972F" onclick="changeColor('Mat_Base', '#FF972F', this)"></button>
-                            </div>
+                    </div>
+
+                    <div class="option-group">
+                        <span class="option-label">Top Color</span>
+                        <div class="swatch-row">
+                            <button class="swatch" style="background:#D9CAAF" onclick="changeColor('Mat_Top', '#D9CAAF', this)"></button>
+                            <button class="swatch" style="background:#322D7C" onclick="changeColor('Mat_Top', '#302A5A', this)"></button>
+                            <button class="swatch" style="background:#FF972F" onclick="changeColor('Mat_Top', '#FF972F', this)"></button>
                         </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <span class="option-label">Base Color</span>
+                        <div class="swatch-row">
+                            <button class="swatch" style="background:#D9CAAF" onclick="changeColor('Mat_Base', '#D9CAAF', this)"></button>
+                            <button class="swatch" style="background:#302A5A" onclick="changeColor('Mat_Base', '#302A5A', this)"></button>
+                            <button class="swatch" style="background:#FF972F" onclick="changeColor('Mat_Base', '#FF972F', this)"></button>
+                        </div>
+                    </div>
                     </div>
                 </div>
 
